@@ -1,31 +1,36 @@
+use std::io;
+fn main()
+{
+    let mut x = String::new();
+    let mut alice_turn = true;
 
-fn main() {
-    let l1 = [2, 4, 3];
-    let l2 = [5, 6];
+    println!("Enter the number: ");
+    io::stdin().read_line(&mut x).expect("Error");
 
-    let mut l3: Vec<i32> = Vec::new();
-    let mut carry = 0;
+    let mut stone: u32 = x.trim().parse().expect("Error");
 
-    let max_len = l1.len().max(l2.len());
-
-    for i in 0..max_len {
-        let a = if i < l1.len() { l1[i] } else { 0 };
-        let b = if i < l2.len() { l2[i] } else { 0 };
-
-        let sum = a + b + carry;
-
-        l3.push(sum % 10);
-        carry = sum / 10;
+    for i in (1..=10).rev()
+    {
+        if stone >= i
+        {
+            stone -= i;
+            alice_turn = !alice_turn;
+        }
+        else
+        {
+            break;
+        }
     }
 
-    if carry > 0 {
-        l3.push(carry);
+    if alice_turn
+    {
+        println!("Bob wins");
     }
-
-    println!("{:?}", l3);
+    else
+    {
+        println!("Alice wins");
+    }
 }
-
-
 
 
 /* 
